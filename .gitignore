@@ -8,6 +8,14 @@ venv2/
 
 # Environment variables / secrets
 .env
+appwrite/.env
+
+# Local seeded storage
+custom-backend/storage/
+!custom-backend/storage/.gitkeep
+
+# Node
+node_modules/
 
 # IDE
 .vscode/
