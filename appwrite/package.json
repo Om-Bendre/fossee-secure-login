@@ -1,0 +1,8 @@
+{
+  "name": "fossee-appwrite-seed",
+  "private": true,
+  "dependencies": {
+    "node-appwrite": "^21.0.0",
+    "dotenv": "^16.4.7"
+  }
+}
