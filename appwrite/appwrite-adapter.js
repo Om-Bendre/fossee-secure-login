@@ -45,11 +45,11 @@
 
     try {
       if (path.endsWith("/register") && method === "POST") {
-        const user = await account.create({
-          userId: Appwrite.ID.unique(),
-          email: body.email,
-          password: body.password
-        });
+        const user = await account.create(
+          Appwrite.ID.unique(),
+          body.email,
+          body.password
+        );
         return jsonResponse({ id: user.$id, email: user.email }, 201);
       }
 
@@ -66,7 +66,7 @@
       }
 
       if (path.endsWith("/logout") && method === "POST") {
-        await account.deleteSession({ sessionId: "current" });
+        await account.deleteSession("current");
         return jsonResponse({ message: "Logout successful" }, 200);
       }
 
@@ -85,10 +85,10 @@
       }
 
       if (path.endsWith("/files") && method === "GET") {
-        const result = await databases.listDocuments({
-          databaseId: c.databaseId,
-          collectionId: c.collectionId
-        });
+        const result = await databases.listDocuments(
+          c.databaseId,
+          c.collectionId
+        );
         return jsonResponse(result.documents.map(d => ({
           id: d.$id,
           ownerId: d.ownerId,
@@ -101,17 +101,17 @@
 
       const match = path.match(/\/files\/([^/]+)(\/download)?$/);
       if (match && method === "GET") {
-        const document = await databases.getDocument({
-          databaseId: c.databaseId,
-          collectionId: c.collectionId,
-          documentId: match[1]
-        });
+        const document = await databases.getDocument(
+          c.databaseId,
+          c.collectionId,
+          match[1]
+        );
 
         if (match[2]) {
-          const url = storage.getFileDownload({
-            bucketId: c.bucketId,
-            fileId: document.storageFileId
-          });
+          const url = storage.getFileDownload(
+            c.bucketId,
+            document.storageFileId
+          );
           return originalFetch(url.toString());
         }
 
